@@ -35,6 +35,23 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
   }
  
   m_bRunning = true;
+
+  //Texture 생성
+  SDL_Surface* pTempSurface = SDL_LoadBMP("Assets/Monk.bmp");
+  m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
+  SDL_FreeSurface(pTempSurface);
+
+  //원본상자(m_sourceRectangle)의 너비/높이
+  SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h); //SDL_QueryTecture의 함수를 이용하여 Texture크기 구하기
+
+  //대상상자(m_destinationRectangle))의 너비/높이
+  m_destinationRectangle.w = m_sourceRectangle.w;
+  m_destinationRectangle.h = m_sourceRectangle.h; //원본 상자와 동일한 크기로 설정
+
+  m_destinationRectangle.x = m_sourceRectangle.x = 0;
+  m_destinationRectangle.y = m_sourceRectangle.y = 0;
+
+
   return true;
 }
 
@@ -46,6 +63,9 @@ void Game::update()
 void Game::render() 
 {
   SDL_RenderClear(m_pRenderer); //지정색으로 랜더러 지우기
+
+  SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
+
   SDL_RenderPresent(m_pRenderer);
   //지운 색을 실질적으로 표시하기
 }

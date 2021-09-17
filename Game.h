@@ -24,6 +24,12 @@ class Game
     SDL_Renderer* m_pRenderer;
     bool m_bRunning;
 
+  // SDL 그리기를 위한 멤버변수 선언
+  SDL_Texture* m_pTexture;
+  SDL_Rect m_sourceRectangle; //원본 사각형
+  SDL_Rect m_destinationRectangle; //대상사각형
+
 };
+
 
 #endif
