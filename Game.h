@@ -29,6 +29,10 @@ class Game
   SDL_Rect m_sourceRectangle; //원본 사각형
   SDL_Rect m_destinationRectangle; //대상사각형
 
+  SDL_Texture* m_pTexture1;
+  SDL_Rect m_sourceRectangle1; //원본 사각형
+  SDL_Rect m_destinationRectangle1; //대상사각형
+
 };
 
 
