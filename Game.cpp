@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "SDL_image.h"
 
 bool Game::init(const char* title, int xpos, int ypos, int height, int width, int flags) //초기화
 {
@@ -12,7 +13,7 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
 
       if(m_pRenderer != 0)
       {
-        SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
+         SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 0, 255);
         //생성한 랜더러의 색을 변경한다.
       }
 
@@ -37,12 +38,16 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
   m_bRunning = true;
 
   //Texture 생성
-  SDL_Surface* pTempSurface = SDL_LoadBMP("Assets/Monk.bmp");
-  m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
+  //bmp
+  //SDL_Surface* pTempSurface = SDL_LoadBMP("Assets/animate.bmp");
+  //png
+  SDL_Surface* pTempSurface = IMG_Load("Assets/animate-alpha.png");
+  m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface); //경로 불러오기
   SDL_FreeSurface(pTempSurface);
 
-  //원본상자(m_sourceRectangle)의 너비/높이
-  SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h); //SDL_QueryTecture의 함수를 이용하여 Texture크기 구하기
+  //원본의 크기를 원하는 만큼 잘라준다
+  m_sourceRectangle.w = 128;
+  m_sourceRectangle.h = 82;
 
   //대상상자(m_destinationRectangle))의 너비/높이
   m_destinationRectangle.w = m_sourceRectangle.w;
@@ -51,26 +56,13 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
   m_destinationRectangle.x = m_sourceRectangle.x = 0;
   m_destinationRectangle.y = m_sourceRectangle.y = 0;
 
-  //Texture1 생성ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-  SDL_Surface* pTempSurface1 = SDL_LoadBMP("Assets/icon.bmp");
-  m_pTexture1 = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface1);
-  SDL_FreeSurface(pTempSurface1);
-
-  SDL_QueryTexture(m_pTexture1, NULL, NULL, &m_sourceRectangle1.w, &m_sourceRectangle1.h); 
-
-  m_destinationRectangle1.w = m_sourceRectangle1.w /2;
-  m_destinationRectangle1.h = m_sourceRectangle1.h /2;  //원본 상자와 동일한 크기로 
-
- //대상상자를 오른쪽 맨끝에 붙히려면?
-  m_destinationRectangle1.x = m_sourceRectangle1.x + 400;
-  m_destinationRectangle1.y = m_sourceRectangle1.y + 400;
-
   return true;
 }
 
 void Game::update()
 {
-
+  //SDL_GetTicks()는 계속 올라가는 함수
+  m_sourceRectangle.x = 128 * ((SDL_GetTicks() / 500) % 6);
 }
 
 void Game::render() 
@@ -78,8 +70,10 @@ void Game::render()
   SDL_RenderClear(m_pRenderer); //지정색으로 랜더러 지우기
 
   SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
+ //전체 화 보여주기
+ // SDL_RenderCopy(m_pRenderer, m_pTexture, NULL, NULL);
 
-  SDL_RenderCopy(m_pRenderer, m_pTexture1, &m_sourceRectangle1, &m_destinationRectangle1);
+ // SDL_RenderCopy(m_pRenderer, m_pTexture1, &m_sourceRectangle1, &m_destinationRectangle1);
 
   SDL_RenderPresent(m_pRenderer);
   //지운 색을 실질적으로 표시하기
