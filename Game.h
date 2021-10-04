@@ -2,6 +2,7 @@
 #define __Game__
 
 #include "SDL.h"
+//#include "TextureManager.h"
 
 class Game
 {
@@ -29,11 +30,15 @@ class Game
   SDL_Rect m_sourceRectangle; //원본 사각형
   SDL_Rect m_destinationRectangle; //대상사각형
 
-  SDL_Texture* m_pTexture1;
-  SDL_Rect m_sourceRectangle1; //원본 사각형
-  SDL_Rect m_destinationRectangle1; //대상사각형
+  /*
+  */
+
+  TextureManager m_textureManager; //TextureManager 인스턴스
+  int m_currentFrame; //스프라이트 애니메이션 구현을 위해 선언
 
 };
+
+
 
 
 #endif

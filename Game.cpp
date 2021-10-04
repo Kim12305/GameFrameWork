@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "SDL_image.h"
+#include "TextureManager.h"
 
 bool Game::init(const char* title, int xpos, int ypos, int height, int width, int flags) //초기화
 {
@@ -38,10 +39,9 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
   m_bRunning = true;
 
   //Texture 생성
-  //bmp
-  //SDL_Surface* pTempSurface = SDL_LoadBMP("Assets/animate.bmp");
+
   //png
-  SDL_Surface* pTempSurface = IMG_Load("Assets/animate-alpha.png");
+  SDL_Surface* pTempSurface = IMG_Load("Assets/Player_2.png");
   m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface); //경로 불러오기
   SDL_FreeSurface(pTempSurface);
 
@@ -55,6 +55,10 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
 
   m_destinationRectangle.x = m_sourceRectangle.x = 0;
   m_destinationRectangle.y = m_sourceRectangle.y = 0;
+  /*
+  */
+ // m_textureManager.load("Assets/animate-alpha.png", "animate", m_pRenderer);
+  
 
   return true;
 }
@@ -62,7 +66,7 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
 void Game::update()
 {
   //SDL_GetTicks()는 계속 올라가는 함수
-  m_sourceRectangle.x = 128 * ((SDL_GetTicks() / 500) % 6);
+ //m_currentFrame = ((SDL_GetTicks() / 100) % 6);
 }
 
 void Game::render() 
@@ -73,10 +77,13 @@ void Game::render()
  //전체 화 보여주기
  // SDL_RenderCopy(m_pRenderer, m_pTexture, NULL, NULL);
 
- // SDL_RenderCopy(m_pRenderer, m_pTexture1, &m_sourceRectangle1, &m_destinationRectangle1);
-
   SDL_RenderPresent(m_pRenderer);
   //지운 색을 실질적으로 표시하기
+  /*
+  */
+
+ // m_textureManager.draw("animate" 0,0,128,82, m_pRenderer);
+ // m_textureManager.drawFrame("animate", 100, 100, 128, 82, 0, m_currentFrame, m_pRenderer);
 }
 
 bool Game::running()
