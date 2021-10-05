@@ -24,7 +24,7 @@ class Game
     SDL_Renderer* m_pRenderer;
     bool m_bRunning;
 
-    TextureManager m_textureManager;
+    //TextureManager m_textureManager;
     int m_currentFrame; 
 
   // SDL 그리기를 위한 멤버변수 선언

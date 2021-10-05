@@ -23,40 +23,43 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
         return false; //랜더러 생성 실패
       }
 
-       m_textureManager.load("Assets/animate-alpha.png", "animate", m_pRenderer);
+      if(!TheTextureManager::Instance()->load("Assets/animate-alpha.png", "animate", m_pRenderer))
+      {
+        return false;
+      }
+
     }
 
     else //윈도우 생성 실패
     {
       return false;
-    }
+    } 
   
-
   }
 
   else //SDL 초기화 실패
   {
     return false;
   }
- 
-  m_bRunning = true;
 
-  
-  return true;
+  m_bRunning = true;
+  return true;  
 }
 
 void Game::update()
 {
-  //SDL_GetTicks()는 계속 올라가는 함수
-  //m_sourceRectangle.x = 128 * ((SDL_GetTicks() / 100) % 6);
   m_currentFrame = ( (SDL_GetTicks() / 100) % 6);
 }
 
 void Game::render() 
 {
   SDL_RenderClear(m_pRenderer); //지정색으로 랜더러 지우기
-  m_textureManager.draw("animate", 0,0, 128, 82, m_pRenderer);
-  m_textureManager.drawFrame("animate", 100,100, 128, 82, 0, m_currentFrame, m_pRenderer);
+  TheTextureManager::Instance()->draw("animate", 0,0, 128, 82, 
+     m_pRenderer);
+
+  TheTextureManager::Instance()->drawFrame("animate", 100,100, 128, 
+    82, 0, m_currentFrame, m_pRenderer);
+    
   SDL_RenderPresent(m_pRenderer);//실질적으로 표시하기
 }
 
