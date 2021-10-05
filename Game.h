@@ -1,6 +1,5 @@
 #ifndef __Game__
 #define __Game__
-
 #include "SDL.h"
 //#include "TextureManager.h"
 
@@ -19,26 +18,27 @@ class Game
     bool running();
     void handleEvents();
     void clean();
-
+    
   private:
     SDL_Window* m_pWindow;
     SDL_Renderer* m_pRenderer;
     bool m_bRunning;
 
+    TextureManager m_textureManager;
+    int m_currentFrame; 
+
   // SDL 그리기를 위한 멤버변수 선언
+  /*
   SDL_Texture* m_pTexture;
   SDL_Rect m_sourceRectangle; //원본 사각형
   SDL_Rect m_destinationRectangle; //대상사각형
 
-  /*
+  SDL_Texture* m_pTexture1;
+  SDL_Rect m_sourceRectangle1; //원본 사각형
+  SDL_Rect m_destinationRectangle1; //대상사각형
   */
 
-  TextureManager m_textureManager; //TextureManager 인스턴스
-  int m_currentFrame; //스프라이트 애니메이션 구현을 위해 선언
-
 };
-
-
 
 
 #endif
