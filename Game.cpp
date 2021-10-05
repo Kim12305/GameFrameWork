@@ -1,6 +1,6 @@
 #include "Game.h"
 #include "SDL_image.h"
-//#include "TextureManager.h"
+#include "TextureManager.h"
 
 bool Game::init(const char* title, int xpos, int ypos, int height, int width, int flags) //초기화
 {
@@ -22,12 +22,15 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
       {
         return false; //랜더러 생성 실패
       }
+
+       m_textureManager.load("Assets/animate-alpha.png", "animate", m_pRenderer);
     }
 
     else //윈도우 생성 실패
     {
       return false;
     }
+  
 
   }
 
@@ -38,12 +41,6 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
  
   m_bRunning = true;
 
-
- // m_textureManager.load("Assets/animate-alpha.png", "animate", m_pRenderer);
- if( !TheTextureManager::Instance()->load("Assets/animate-alpha.png", "animate", m_pRenderer))
-  {
-   return false;
-  }
   
   return true;
 }
@@ -57,15 +54,10 @@ void Game::update()
 
 void Game::render() 
 {
-
-  //m_textureManager.draw("animate", 0,0, 128, 82, m_pRenderer);
-  //m_textureManager.drawFrame("animate", 100,100, 128, 82, 0, m_currentFrame, m_pRenderer);
-
-  TheTextureManager::Instance()->draw("animate", 0,0, 128, 82, 
-     m_pRenderer);
-
-  TheTextureManager::Instance()->drawFrame("animate", 100,100, 128, 
-    82, 0, m_currentFrame, m_pRenderer);
+  SDL_RenderClear(m_pRenderer); //지정색으로 랜더러 지우기
+  m_textureManager.draw("animate", 0,0, 128, 82, m_pRenderer);
+  m_textureManager.drawFrame("animate", 100,100, 128, 82, 0, m_currentFrame, m_pRenderer);
+  SDL_RenderPresent(m_pRenderer);//실질적으로 표시하기
 }
 
 bool Game::running()

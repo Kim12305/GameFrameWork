@@ -1,4 +1,4 @@
-#ifndef __Game__
+#ifndef __Game__ //중복 선언
 #define __Game__
 #include "SDL.h"
 #include "TextureManager.h"
@@ -24,8 +24,8 @@ class Game
     SDL_Renderer* m_pRenderer;
     bool m_bRunning;
 
-    //TextureManager m_textureManager;
-    //int m_currentFrame; 
+    TextureManager m_textureManager;
+    int m_currentFrame; 
 
   // SDL 그리기를 위한 멤버변수 선언
   /*
