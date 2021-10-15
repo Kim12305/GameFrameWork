@@ -2,6 +2,9 @@
 #define __Game__
 #include "SDL.h"
 #include "TextureManager.h"
+#include "GameObject.h"
+#include "Player.h"
+
 
 class Game
 {
@@ -24,19 +27,11 @@ class Game
     SDL_Renderer* m_pRenderer;
     bool m_bRunning;
 
-    //TextureManager m_textureManager;
     int m_currentFrame; 
 
-  // SDL 그리기를 위한 멤버변수 선언
-  /*
-  SDL_Texture* m_pTexture;
-  SDL_Rect m_sourceRectangle; //원본 사각형
-  SDL_Rect m_destinationRectangle; //대상사각형
+    GameObject m_go;
+    Player m_player;
 
-  SDL_Texture* m_pTexture1;
-  SDL_Rect m_sourceRectangle1; //원본 사각형
-  SDL_Rect m_destinationRectangle1; //대상사각형
-  */
 
 };
 

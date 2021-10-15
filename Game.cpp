@@ -1,6 +1,4 @@
 #include "Game.h"
-#include "SDL_image.h"
-#include "TextureManager.h"
 
 bool Game::init(const char* title, int xpos, int ypos, int height, int width, int flags) //초기화
 {
@@ -28,6 +26,9 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
         return false;
       }
 
+      m_go.load(100, 100, 128, 82, "animate");
+      m_player.load(300, 300, 128, 82, "animate");
+
     }
 
     else //윈도우 생성 실패
@@ -49,10 +50,15 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
 void Game::update()
 {
   m_currentFrame = ( (SDL_GetTicks() / 100) % 6);
+
+  m_go.update();
+  m_player.update();
+
 }
 
 void Game::render() 
 {
+  /*
   SDL_RenderClear(m_pRenderer); //지정색으로 랜더러 지우기
   TheTextureManager::Instance()->draw("animate", 0,0, 128, 82, 
      m_pRenderer);
@@ -61,6 +67,13 @@ void Game::render()
     82, 0, m_currentFrame, m_pRenderer);
     
   SDL_RenderPresent(m_pRenderer);//실질적으로 표시하기
+  */
+
+   SDL_RenderClear(m_pRenderer); //지정색으로 랜더러 지우기
+   m_go.draw(m_pRenderer);
+   m_player.draw(m_pRenderer);
+
+   SDL_RenderPresent(m_pRenderer);//실질적으로 표시하기
 }
 
 bool Game::running()

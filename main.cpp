@@ -13,6 +13,7 @@ int main(int argc, char* argv[])
     g_game->handleEvents();
     g_game->update();
     g_game->render();
+    SDL_Delay(10); //Frame Rate제한하기 위해 고정 delay 추가
   }
 
   g_game->clean();
