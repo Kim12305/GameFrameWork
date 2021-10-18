@@ -1,6 +1,8 @@
 #ifndef __Game__ //중복 선언
 #define __Game__
 #include "SDL.h"
+#include <vector> //리스트와 비슷하다 항목을 넣고 삭제가능
+
 #include "TextureManager.h"
 #include "GameObject.h"
 #include "Player.h"
@@ -27,10 +29,9 @@ class Game
     SDL_Renderer* m_pRenderer;
     bool m_bRunning;
 
-    int m_currentFrame; 
+    int m_currentFrame;
 
-    GameObject m_go;
-    Player m_player;
+    std::vector<GameObject*> m_gameObjects;
 
 
 };
