@@ -1,6 +1,5 @@
 #include "Game.h"
 
-Game * Game::s_pInstance = 0;
 
 bool Game::init(const char* title, int xpos, int ypos, int height, int width, int flags) //초기화
 {
@@ -23,69 +22,41 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
         return false; //랜더러 생성 실패
       }
 
-      if(!TheTextureManager::Instance()->load("Assets/animate-alpha.png", "animate", m_pRenderer))
-      {
-        return false;
-      }
-
-      
-      if(!TheTextureManager::Instance()->load("Assets/Player_3.png", "player", m_pRenderer))
-      {
-        return false;
-      }
-
-      m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
-      m_gameObjects.push_back(new Enemy (new LoaderParams(100, 200, 64, 64, "player")));
-/*
-      GameObject* m_go = new GameObject();
-      GameObject* m_player = new Player();
-
-      m_go->load(100, 100, 128, 82, "animate");
-      m_player->load(300, 300, 128, 82,  "animate");
-
-      m_gameObjects.push_back(m_go);
-      m_gameObjects.push_back(m_player);
-*/
-
-
+      // m_textureManager.load("Assets/animate-alpha.png", "animate", m_pRenderer);
     }
 
     else //윈도우 생성 실패
     {
       return false;
-    } 
+    }
   
+
   }
 
   else //SDL 초기화 실패
   {
     return false;
   }
-
+ 
   m_bRunning = true;
-  return true;  
+
+  m_textureManager.load("Assets/animate-alpha.png", "animate", m_pRenderer);
+  
+  return true;
 }
 
 void Game::update()
 {
-
-  for(int i = 0; i < m_gameObjects.size(); i++)
-  {
-    m_gameObjects[i]->update();
-  }
-
+  //SDL_GetTicks()는 계속 올라가는 함수
+  //m_sourceRectangle.x = 128 * ((SDL_GetTicks() / 100) % 6);
+  m_currentFrame = ( (SDL_GetTicks() / 100) % 6);
 }
 
 void Game::render() 
 {
   SDL_RenderClear(m_pRenderer); //지정색으로 랜더러 지우기
-
-  for(int i = 0; i != m_gameObjects.size(); i++)
-  {
-    m_gameObjects[i]->draw();
-
-  }
-
+  m_textureManager.draw("animate", 0,0, 128, 82, m_pRenderer);
+  m_textureManager.drawFrame("animate", 100,100, 128, 82, 0, m_currentFrame, m_pRenderer);
   SDL_RenderPresent(m_pRenderer);//실질적으로 표시하기
 }
 
