@@ -28,8 +28,14 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
         return false;
       }
 
+      
+      if(!TheTextureManager::Instance()->load("Assets/Player_3.png", "player", m_pRenderer))
+      {
+        return false;
+      }
+
       m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
-      m_gameObjects.push_back(new Enemy (new LoaderParams(100, 100, 128, 82, "animate")));
+      m_gameObjects.push_back(new Enemy (new LoaderParams(100, 200, 64, 64, "player")));
 /*
       GameObject* m_go = new GameObject();
       GameObject* m_player = new Player();
