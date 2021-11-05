@@ -1,14 +1,37 @@
 #ifndef __Game__ //중복 선언
 #define __Game__
 #include "SDL.h"
-#include "SDL_image.h"
+#include <vector> //리스트와 비슷하다 항목을 넣고 삭제가능
+#include <iostream>
+
 #include "TextureManager.h"
+#include "GameObject.h"
+#include "SDLGameObject.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Vector2D.h"
+
 
 class Game
 {
-  public:
+  private:
     Game() {} //생성자
-    ~Game() {} //소멸자
+    static Game* s_pInstance; //정적 멤버 변수
+
+  public:
+    static Game * Instance()
+    {
+      if(s_pInstance == 0)
+      {
+        s_pInstance = new Game();
+          return s_pInstance;
+      }
+
+      return s_pInstance;
+
+    }
+
+    SDL_Renderer* getRenderer() const {return m_pRenderer;}
 
     //초기화 함수
     bool init(const char* title, int xpos, int ypos, int height, int width, int flags);
@@ -25,21 +48,12 @@ class Game
     SDL_Renderer* m_pRenderer;
     bool m_bRunning;
 
-    TextureManager m_textureManager;
-    int m_currentFrame; 
+    int m_currentFrame;
 
-  // SDL 그리기를 위한 멤버변수 선언
-  /*
-  SDL_Texture* m_pTexture;
-  SDL_Rect m_sourceRectangle; //원본 사각형
-  SDL_Rect m_destinationRectangle; //대상사각형
+    std::vector<GameObject*> m_gameObjects;
 
-  SDL_Texture* m_pTexture1;
-  SDL_Rect m_sourceRectangle1; //원본 사각형
-  SDL_Rect m_destinationRectangle1; //대상사각형
-  */
 
 };
 
-
+typedef Game TheGame;
 #endif
