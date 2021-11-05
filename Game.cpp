@@ -28,8 +28,8 @@ bool Game::init(const char* title, int xpos, int ypos, int height, int width, in
         return false;
       }
 
-      m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
-      m_gameObjects.push_back(new Enemy (new LoaderParams(300, 300, 128, 82, "animate")));
+      m_gameObjects.push_back(new Player(new LoaderParams(0, 100, 128, 82, "animate")));
+      m_gameObjects.push_back(new Enemy (new LoaderParams(0, 300, 128, 82, "animate")));
 /*
       GameObject* m_go = new GameObject();
       GameObject* m_player = new Player();
